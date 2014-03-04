@@ -3,63 +3,69 @@
     <title>Graphs</title>
     <style type="text/css">
         #buttonarea {
-                width: 100px;
-                height: 440px;
-                position: absolute;
-                left: 0px;
-                top: 50px; 
-                background: #35d128;
+            width: 100px;
+            height: 440px;
+            position: absolute;
+            left: 0px;
+            top: 75px; 
+            background: #35d128;
         }
         #graph {
-                position:absolute;
-                left:130px;
-                top:50px;
+            position: absolute;
+            left: 130px;
+            top: 75px;
         }
-        #dataset {
-                background:#358128; 
-                color:#f3f3f3;
-                width:80px;
-                height:25px;
-                border:1px solid #33842a;
-                -webkit-border-radius: 0 15px 15px 0;
-                -moz-border-radius: 0 15px 15px 0;
-                box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+        #vertex {
+            background:#358128; 
+            color:#f3f3f3;
+            width:80px;
+            height:25px;
+            border:1px solid #33842a;
+            -webkit-border-radius: 0 15px 15px 0;
+            -moz-border-radius: 0 15px 15px 0;
+            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
         }
-        #draw {
-                background:#358128; 
-                color:#f3f3f3;
-                width:80px;
-                height:25px;
-                border:1px solid #33842a;
-                -webkit-border-radius: 0 15px 15px 0;
-                -moz-border-radius: 0 15px 15px 0;
-                box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+        #edge {
+            background:#358128; 
+            color:#f3f3f3;
+            width:80px;
+            height:25px;
+            border:1px solid #33842a;
+            -webkit-border-radius: 0 15px 15px 0;
+            -moz-border-radius: 0 15px 15px 0;
+            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
         }
         #reset {
-                background:#358128; 
-                color:#f3f3f3;
-                width:80px;
-                height:25px;
-                border:1px solid #33842a;
-                -webkit-border-radius: 0 15px 15px 0;
-                -moz-border-radius: 0 15px 15px 0;
-                box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+            background:#358128; 
+            color:#f3f3f3;
+            width:80px;
+            height:25px;
+            border:1px solid #33842a;
+            -webkit-border-radius: 0 15px 15px 0;
+            -moz-border-radius: 0 15px 15px 0;
+            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
         }
+        #heading {
+            position: absolute;
+            left: 375px;
+            top: 0px;
+        }
+        
     </style>
 </head>
-<body onload="graph()">
-    <p><h2>Graphs</h2></p>
+<body>
+    <label id="heading"><h1>Graphs</h1></label>
     <p><table>
         <tr>
             <td>
                 <fieldset id="buttonarea">
                 <br>
                 <br>
-                <button id="dataset" type="button" style="height: 25px; width: 100px;" onclick="dataset()">Dataset</button>
+                <button id="vertex" type="button" style="height: 25px; width: 100px;" onclick="vertex()">Vertex</button>
                 <br>
                 <br>
                 <br>
-                <button id="draw" type="button" style="height: 25px; width: 100px;" onclick="draw()">Draw</button>
+                <button id="edge" type="button" style="height: 25px; width: 100px;" onclick="edge()">Edge</button>
                 <br>
                 <br>
                 <br>
@@ -78,24 +84,51 @@
     </table></p>
     <script type="text/javascript">
     
-    function graph(){
-        canvas = document.getElementById("graph");
-        if (canvas && canvas.getContext) {
-            ctx = canvas.getContext("2d");
-        }
-        
-    }
+    var canvas = document.getElementById("graph");
+    var ctx = canvas.getContext("2d");
+    var hold = false;
+    var prevX, prevY, curX, curY;
+    ctx.lineWidth = 5;
     
-    function dataset(){
-        window.location.assign("/home/nidhin/tasks/graph/dataset.html");
+    function vertex(){
+        canvas.onmousedown = function (e){
+            curX = e.clientX - canvas.offsetLeft;
+            curY = e.clientY - canvas.offsetTop;
+            ctx.beginPath();
+            ctx.arc(curX, curY, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        };
     }
-    
-    function draw(){
-        ctx.beginPath();
-        ctx.moveTo(100, 100);
-        ctx.lineTo(200, 200);
-        ctx.closePath();
-        ctx.stroke();
+       
+    function edge(){
+        canvas.onmousedown = function (e){
+            img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            prevX = e.clientX - canvas.offsetLeft;
+            prevY = e.clientY - canvas.offsetTop;
+            hold = true;
+        };
+            
+        canvas.onmousemove = function linemove(e){
+            if (hold){
+                ctx.putImageData(img, 0, 0);
+                curX = e.clientX - canvas.offsetLeft;
+                curY = e.clientY - canvas.offsetTop;
+                ctx.beginPath();
+                ctx.moveTo(prevX, prevY);
+                ctx.lineTo(curX, curY);
+                ctx.stroke();
+                ctx.closePath();
+            }
+        };
+            
+        canvas.onmouseup = function (e){
+            hold = false;
+        };
+            
+        canvas.onmouseout = function (e){
+            hold = false;
+        }; 
     }
     
     function reset(){
