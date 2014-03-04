@@ -53,14 +53,14 @@
     var ctx = canvas.getContext("2d");
     var hold = false;
     var prevX, prevY, curX, curY;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 3;
     
     function vertex(){
         canvas.onmousedown = function (e){
             curX = e.clientX - canvas.offsetLeft;
             curY = e.clientY - canvas.offsetTop;
             ctx.beginPath();
-            ctx.arc(curX, curY, 15, 0, 2 * Math.PI);
+            ctx.arc(curX, curY, 10, 0, 2 * Math.PI);
             ctx.fill();
             ctx.closePath();
         };
