@@ -2,6 +2,7 @@
 <head>
     <title>Graphs</title>
     <style type="text/css">
+        
         #buttonarea {
             width: 100px;
             height: 440px;
@@ -10,78 +11,42 @@
             top: 75px; 
             background: #35d128;
         }
+        
         #graph {
             position: absolute;
             left: 130px;
             top: 75px;
         }
-        #vertex {
+        
+        #vertex, #edge, #reset {
             background:#358128; 
             color:#f3f3f3;
-            width:80px;
-            height:25px;
-            border:1px solid #33842a;
-            -webkit-border-radius: 0 15px 15px 0;
-            -moz-border-radius: 0 15px 15px 0;
-            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
+            position: absolute;
+            top:550px;
+            width: 100px;
+            border-radius: 15px;
         }
-        #edge {
-            background:#358128; 
-            color:#f3f3f3;
-            width:80px;
-            height:25px;
-            border:1px solid #33842a;
-            -webkit-border-radius: 0 15px 15px 0;
-            -moz-border-radius: 0 15px 15px 0;
-            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
-        }
-        #reset {
-            background:#358128; 
-            color:#f3f3f3;
-            width:80px;
-            height:25px;
-            border:1px solid #33842a;
-            -webkit-border-radius: 0 15px 15px 0;
-            -moz-border-radius: 0 15px 15px 0;
-            box-shadow: rgba(0, 0, 0, .75) 0 2px 6px;
-        }
+        
         #heading {
             position: absolute;
-            left: 375px;
+            left: 430px;
             top: 0px;
+            color: #ffffff;
         }
         
     </style>
 </head>
-<body>
+<body style="background-image:url(background.jpg)">
     <label id="heading"><h1>Graphs</h1></label>
-    <p><table>
-        <tr>
-            <td>
-                <fieldset id="buttonarea">
-                <br>
-                <br>
-                <button id="vertex" type="button" style="height: 25px; width: 100px;" onclick="vertex()">Vertex</button>
-                <br>
-                <br>
-                <br>
-                <button id="edge" type="button" style="height: 25px; width: 100px;" onclick="edge()">Edge</button>
-                <br>
-                <br>
-                <br>
-                <button id="reset" type="button" style="height: 25px; width: 100px;" onclick="reset()">Reset</button> 
-                <br>
-                <br>
-                <br>
-                </fieldset>
-            </td>
-            <td>
-                <canvas id="graph" width="750" height="450" style="border: 5px solid #000000;">
-                    Update your browser to support HTML5
-                </canvas>
-            </td>
-        </tr>
-    </table></p>
+    <p><canvas id="graph" width="750" height="450" style="background-color: #ffffff; border: 5px solid #000000;">
+        Update your browser to support HTML5
+       </canvas>
+    </p>
+    <p>
+        <button id="vertex" type="button" style="height: 25px; width: 100px; left: 320px;" onclick="vertex()">Vertex</button>
+        <button id="edge" type="button" style="height: 25px; width: 100px; left: 440px;" onclick="edge()">Edge</button>
+        <button id="reset" type="button" style="height: 25px; width: 100px; left: 550px;" onclick="reset()">Reset</button>
+    </p>
     <script type="text/javascript">
     
     var canvas = document.getElementById("graph");
@@ -95,7 +60,7 @@
             curX = e.clientX - canvas.offsetLeft;
             curY = e.clientY - canvas.offsetTop;
             ctx.beginPath();
-            ctx.arc(curX, curY, 20, 0, 2 * Math.PI);
+            ctx.arc(curX, curY, 15, 0, 2 * Math.PI);
             ctx.fill();
             ctx.closePath();
         };
